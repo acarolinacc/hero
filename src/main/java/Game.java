@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class Game {
     private Screen screen;
+
     public static void main(String[] args) throws IOException {
         Game game = new Game();
         game.run();
     }
-    Game(){
+    public Game(){
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
             TerminalSize terminalSize = new TerminalSize(40, 20);
@@ -35,12 +36,28 @@ public class Game {
     private int y = 10;
     private void draw() throws IOException {
         screen.clear();
+        screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
         screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
         screen.refresh();
     }
     private void processKey(KeyStroke key) {
-        System.out.println(key);
+        KeyType pressed = key.getKeyType();
+        switch (pressed)
+        {
+            case ArrowDown:
+                y--;
+                break;
+            case ArrowUp:
+                y++;
+                break;
+            case ArrowLeft:
+                x--;
+                break;
+            case ArrowRight:
+                x++;
+                break;
 
+        }
     }
     public void run() throws IOException{
         while(true) {
