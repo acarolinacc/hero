@@ -8,17 +8,20 @@ import com.googlecode.lanterna.screen.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Arena {
     private int width;
     private int height;
     private Hero hero;
     private List<Wall> walls;
+    private List<Coin> coins;
     public Arena(int x, int y, Hero h) {
         this.width = x;
         this.height = y;
         this.hero = h;
         this.walls = createWalls();
+        this.coins = createCoins();
     }
     public void processKey(KeyStroke key) {
         KeyType pressed = key.getKeyType();
@@ -45,7 +48,7 @@ public class Arena {
 
     private boolean canHeroMove(Position position) {
         for (Wall wall: walls) {
-            if (wall.getPosition().equals(position) && wall.getPosition().equals(position)) {
+            if (wall.getPosition().equals(position)) {
                 return false;
             }
         }
@@ -71,6 +74,27 @@ public class Arena {
         graphics.fillRectangle(new TerminalPosition(0,0), new TerminalSize(width, height), ' ');
         for (Wall wall: walls)
             wall.draw(graphics);
+        for (Coin coin : coins) {
+            coin.draw(graphics);
+            if (retrieveCoin(coin)) {
+                coins.remove(coin);
+                break;
+            }
+        }
         hero.draw(graphics);
+    }
+
+    private boolean retrieveCoin(Coin coin) {
+        return hero.getPosition().equals(coin.getPosition());
+    }
+    private List<Coin> createCoins() {
+        Random random = new Random();
+        List<Coin> coins = new ArrayList<>();
+        /*for (int i = 0; i < 5; i++)
+            coins.add(new Coin(new Position((width - 2) + 1, random.nextInt(height - 2) + 1)));*/
+        for (int i = 0; i < 5; i++)
+            coins.add(new Coin(new Position(random.nextInt(width - 2) + 1,
+                    random.nextInt(height - 2) + 1)));
+        return coins;
     }
 }
