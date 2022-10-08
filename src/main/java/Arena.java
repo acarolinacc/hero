@@ -18,6 +18,7 @@ public class Arena {
         this.width = x;
         this.height = y;
         this.hero = h;
+        this.walls = createWalls();
     }
     public void processKey(KeyStroke key) {
         KeyType pressed = key.getKeyType();
@@ -44,8 +45,9 @@ public class Arena {
 
     private boolean canHeroMove(Position position) {
         for (Wall wall: walls) {
-            if (wall.getPosition().equals(position) && wall.getPosition().equals(position))
+            if (wall.getPosition().equals(position) && wall.getPosition().equals(position)) {
                 return false;
+            }
         }
         return true;
     }
@@ -63,7 +65,6 @@ public class Arena {
             }
         return walls;
     }
-}
 
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#A59C9C"));
