@@ -44,13 +44,11 @@ public class Arena {
 
     private boolean canHeroMove(Position position) {
         for (Wall wall: walls) {
-            if (wall.getPosition().getX() == position.getX() && wall.getPosition().getY() == position.getY()) {
+            if (wall.getPosition().equals(position) && wall.getPosition().equals(position))
                 return false;
         }
-
+        return true;
     }
-        return false;
-
         private List<Wall> createWalls() {
             List<Wall> walls = new ArrayList<>();
 
@@ -74,4 +72,4 @@ public class Arena {
             wall.draw(graphics);
         hero.draw(graphics);
     }
-    }
+}
