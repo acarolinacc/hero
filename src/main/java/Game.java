@@ -28,8 +28,6 @@ public class Game {
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,8 +42,6 @@ public class Game {
             e.printStackTrace();
         }
     }
-
-
 
     public void run() {
         while (true) {
@@ -65,5 +61,6 @@ public class Game {
         }
     }
 }
+
 
 
