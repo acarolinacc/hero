@@ -41,26 +41,33 @@ public class Game {
         }
     }
 
-    private void draw() throws IOException {
-        screen.clear();
-        arena.draw(graphics);
-        screen.refresh();
+    private void draw() {
+        try {
+            screen.clear();
+            arena.draw(graphics);
+            screen.refresh();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
 
-    public void run() throws IOException{
-        while(true) {
-            draw();
-            KeyStroke key = screen.readInput();
-
-            if (key.getKeyType() == KeyType.Character && key.getCharacter()
-                    == 'q') {
-                screen.close();
-            } else if (key.getKeyType() == KeyType.EOF) {
-                break;
+    public void run() {
+        while (true) {
+            try {
+                draw();
+                KeyStroke key = screen.readInput();
+                if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
+                    screen.close();
                 }
-            arena.processKey(key);
+                else if (key.getKeyType() == KeyType.EOF) {
+                    break;
+                }
+                else arena.processKey(key);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
