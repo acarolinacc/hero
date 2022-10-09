@@ -78,10 +78,10 @@ public class Arena {
     private void moveMonsters() {
         for (Monster monster : monsters)
         {
-            Position spos = monster.getPosition();
+            Position pos = monster.getPosition();
             monster.setPosition(monster.move());
             if (!canMove(monster.getPosition()))
-                monster.setPosition(spos);
+                monster.setPosition(pos);
         }
     }
     private boolean canMove(Position position) {

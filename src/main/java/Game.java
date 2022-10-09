@@ -10,24 +10,30 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
+    public static void main(String[] args){
+        Game game = new Game();
+        game.run();
+    }
     Screen screen;
-    private Arena arena;
+    private Arena arena ;
     private Hero hero;
     private TextGraphics graphics;
 
     public Game(){
         try {
-            hero = new Hero(new Position(10, 10));
-            arena = new Arena(80,24, hero);
-            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            hero = new Hero(new Position(10,10));
+            arena = new Arena(80, 24, hero);
+
             TerminalSize terminalSize = new TerminalSize(80, 24);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+            Terminal terminal = new DefaultTerminalFactory().createTerminal();
 
-            graphics = screen.newTextGraphics();
             screen = new TerminalScreen(terminal);
+            graphics = screen.newTextGraphics();
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,13 +54,13 @@ public class Game {
             try {
                 draw();
                 KeyStroke key = screen.readInput();
+                arena.processKey(key);
                 if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
                     screen.close();
                 }
                 else if (key.getKeyType() == KeyType.EOF) {
                     break;
                 }
-                else arena.processKey(key);
             } catch (IOException e) {
                 e.printStackTrace();
             }
